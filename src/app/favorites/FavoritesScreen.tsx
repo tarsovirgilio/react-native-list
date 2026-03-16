@@ -1,7 +1,8 @@
 import { View, Text } from "react-native";
-import UserList from "../../features/users/components/UserList";
 import { useFavoritesStore } from "../../store/favoritesStore";
 import { User } from "../../features/users/types/User";
+import EmptyState from "../../shared/components/EmptyState";
+import UserList from "../../features/users/components/UserList";
 
 export default function FavoritesScreen() {
   const favorites = useFavoritesStore((state) => state.favorites)
@@ -11,17 +12,16 @@ export default function FavoritesScreen() {
     removeFavorite(user.id)
   }
 
-  console.log("favorites", favorites);
-
   if (favorites.length === 0) {
     return <Text>No favorites yet</Text>
   }
 
   return (
-    <UserList
+    <UserList 
       users={favorites}
       favorites={favorites.map((f) => f.id)}
       onToggleFavorite={toggleFavorite}
+      ListEmptyComponent={<EmptyState message="User not found"/>}
     />
   )
 }

@@ -1,10 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchUsers } from "../../../services/githubApi";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { fetchUsers, getUsers, searchUsers } from "../../../services/githubApi";
 import { User } from "../types/User";
 
 export function useUsers() {
-  return useQuery<User[]>({
+  return useInfiniteQuery({
     queryKey: ["users"],
-    queryFn: fetchUsers,
-  });
+    queryFn: ({ pageParam = 1 }) => getUsers(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (_, pages) => pages.length + 1,
+  })
+}
+
+export function useSearchUsers(query: string) {
+  return useInfiniteQuery({
+    queryKey: ["searchUsers", query],
+    queryFn: ({ pageParam = 1 }) => searchUsers(query, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (_, pages) => pages.length + 1,
+    enabled: query.length > 2,
+  })
 }
