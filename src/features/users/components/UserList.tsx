@@ -8,7 +8,7 @@ import PaginatedList from '../../../shared/components/PaginatedList';
 type UserListProps = {
   users: User[];
   favorites?: number[];
-  onToggleFavorite?: () => void;
+  onToggleFavorite?: (user: User) => void;
   onEndReached?: () => void;
   isFetchingNextPage?: boolean;
   ListEmptyComponent: React.JSX.Element;

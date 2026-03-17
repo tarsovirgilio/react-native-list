@@ -5,7 +5,7 @@ import { User } from '../types/User';
 type UserListItemProps = {
   user: User;
   isFavorite?: boolean;
-  onToggleFavorite?: () => void;
+  onToggleFavorite?: (user: User) => void;
 };
 
 export default function UserListItem({ user, isFavorite, onToggleFavorite }: UserListItemProps) {

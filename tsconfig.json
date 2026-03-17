@@ -9,22 +9,24 @@
     "noImplicitReturns": true,
     "noImplicitOverride": true,
 
+    "target": "ESNext",
+    "lib": ["ESNext"],
+
     /* React Native */
     "jsx": "react-native",
     "types": ["react", "react-native"],
 
     /* Metro compatibility */
-    "moduleResolution": "node",
     "isolatedModules": true,
     "noEmit": true,
 
-    /* DX (Developer Experience) */
+    /* DX */
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    /* Paths (opcional, mas recomendado) */
+    /* Paths */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

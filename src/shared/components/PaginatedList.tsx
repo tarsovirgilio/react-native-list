@@ -4,7 +4,7 @@ import { FlatList, ActivityIndicator, ListRenderItem } from 'react-native';
 type PaginatedListProps<T> = {
   data: T[];
   renderItem: ListRenderItem<T>;
-  keyExtractor?: () => string;
+  keyExtractor?: (item: any) => string;
   onEndReached?: () => void;
   isFetchingNextPage?: boolean;
   ListEmptyComponent: React.JSX.Element;

@@ -1,8 +1,9 @@
+import { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 type SearchInputProps = {
   value: string;
-  onChange: () => void;
+  onChange: Dispatch<SetStateAction<string>>;
 };
 
 export default function SearchInput({ value, onChange }: SearchInputProps) {
