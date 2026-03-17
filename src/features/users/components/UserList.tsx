@@ -4,6 +4,7 @@ import { ListRenderItem } from 'react-native';
 import UserListItem from './UserListItem';
 import { User } from '../types/User';
 import PaginatedList from '../../../shared/components/PaginatedList';
+import UserListSkeleton from './UserListSkeleton';
 
 type UserListProps = {
   users: User[];
@@ -22,14 +23,18 @@ export default function UserList({
   isFetchingNextPage,
   ListEmptyComponent,
 }: UserListProps) {
+  const favoritesSet = new Set(favorites);
+
   const renderItem: ListRenderItem<User> = useCallback(
-    ({ item }) => (
-      <UserListItem
-        user={item}
-        isFavorite={favorites?.includes(item.id)}
-        onToggleFavorite={onToggleFavorite}
-      />
-    ),
+    ({ item }) => {
+      return (
+        <UserListItem
+          user={item}
+          isFavorite={favoritesSet.has(item.id)}
+          onToggleFavorite={onToggleFavorite}
+        />
+      );
+    },
     [favorites, onToggleFavorite],
   );
 
@@ -40,6 +45,7 @@ export default function UserList({
       renderItem={renderItem}
       onEndReached={onEndReached}
       isFetchingNextPage={isFetchingNextPage}
+      ListFooterComponent={<UserListSkeleton />}
       ListEmptyComponent={ListEmptyComponent}
     />
   );

@@ -1,5 +1,5 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-
+import { memo } from 'react';
+import { Image, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { User } from '../types/User';
 
 type UserListItemProps = {
@@ -8,12 +8,17 @@ type UserListItemProps = {
   onToggleFavorite?: (user: User) => void;
 };
 
-export default function UserListItem({ user, isFavorite, onToggleFavorite }: UserListItemProps) {
+function UserListItem({ user, isFavorite, onToggleFavorite }: UserListItemProps) {
+  function handleOpenProfile() {
+    Linking.openURL(user.html_url);
+  }
+
   return (
     <View style={styles.row}>
-      <Image source={{ uri: user.avatar_url }} style={styles.avatar} />
-
-      <Text style={styles.name}>{user.login}</Text>
+      <TouchableOpacity style={styles.userInfo} onPress={handleOpenProfile}>
+        <Image source={{ uri: user.avatar_url }} style={styles.avatar} />
+        <Text style={styles.name}>{user.login}</Text>
+      </TouchableOpacity>
 
       {onToggleFavorite && (
         <Pressable onPress={() => onToggleFavorite(user)}>
@@ -24,11 +29,20 @@ export default function UserListItem({ user, isFavorite, onToggleFavorite }: Use
   );
 }
 
+export default memo(UserListItem);
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    justifyContent: 'space-between',
+    padding: 12,
+  },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1,
   },
   avatar: {
     width: 48,

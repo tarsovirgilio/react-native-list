@@ -5,9 +5,13 @@ import { getUsers, searchUsers } from '../../../services/githubApi';
 export function useUsers() {
   return useInfiniteQuery({
     queryKey: ['users'],
-    queryFn: ({ pageParam = 1 }) => getUsers(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (_, pages) => pages.length + 1,
+    queryFn: ({ pageParam = 0 }) => getUsers(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.length) return undefined;
+
+      return lastPage[lastPage.length - 1].id;
+    },
   });
 }
 

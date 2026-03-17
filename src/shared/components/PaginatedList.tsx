@@ -7,7 +7,10 @@ type PaginatedListProps<T> = {
   keyExtractor?: (item: any) => string;
   onEndReached?: () => void;
   isFetchingNextPage?: boolean;
+  ListFooterComponent: React.JSX.Element;
   ListEmptyComponent: React.JSX.Element;
+  isRefreshing?: boolean;
+  onRefresh?: () => void;
 };
 
 export default function PaginatedList<T>({
@@ -16,17 +19,31 @@ export default function PaginatedList<T>({
   keyExtractor,
   onEndReached,
   isFetchingNextPage,
+  ListFooterComponent = <ActivityIndicator />,
   ListEmptyComponent,
+  isRefreshing,
+  onRefresh,
 }: PaginatedListProps<T>) {
   return (
     <FlatList<T>
       data={data}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      onEndReached={onEndReached}
+      onEndReached={() => {
+        if (!isFetchingNextPage) {
+          onEndReached?.();
+        }
+      }}
       onEndReachedThreshold={0.5}
+      refreshing={isRefreshing}
+      onRefresh={onRefresh}
       ListEmptyComponent={ListEmptyComponent}
-      ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
+      ListFooterComponent={isFetchingNextPage ? ListFooterComponent : null}
+      getItemLayout={(_, index) => ({
+        length: 80,
+        offset: 80 * index,
+        index,
+      })}
       initialNumToRender={10}
       maxToRenderPerBatch={10}
       windowSize={5}

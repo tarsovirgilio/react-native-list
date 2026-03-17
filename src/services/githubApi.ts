@@ -10,8 +10,8 @@ export async function fetchUsers(): Promise<User[]> {
   return response.json();
 }
 
-export async function getUsers(page = 1): Promise<User[]> {
-  const response = await fetch(`https://api.github.com/users?since=${page * 20}`);
+export async function getUsers(since = 0): Promise<User[]> {
+  const response = await fetch(`https://api.github.com/users?since=${since}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch users');

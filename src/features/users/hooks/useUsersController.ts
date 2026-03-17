@@ -30,5 +30,6 @@ export function useUsersController() {
     isLoading: query.isLoading,
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
+    isError: query.isError,
   };
 }
