@@ -1,33 +1,34 @@
-import { useEffect, useState } from "react"
-import { useSearchUsers, useUsers } from "./useUsers"
+import { useEffect, useState } from 'react';
 
-export function useUsersController () {
-    const [search, setSearch] = useState("")
-    const [debouncedSearch, setDebouncedSearch] = useState("")
+import { useSearchUsers, useUsers } from './useUsers';
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-        setDebouncedSearch(search)
-        }, 500)
+export function useUsersController() {
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
-        return () => clearTimeout(timer)
-    }, [search])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
 
-    const usersQuery = useUsers()
-    const searchQuery = useSearchUsers(debouncedSearch)
+    return () => clearTimeout(timer);
+  }, [search]);
 
-    const isSearching = debouncedSearch.length > 2
+  const usersQuery = useUsers();
+  const searchQuery = useSearchUsers(debouncedSearch);
 
-    const query = isSearching ? searchQuery : usersQuery
+  const isSearching = debouncedSearch.length > 2;
 
-    const users = query.data?.pages.flat() ?? []
+  const query = isSearching ? searchQuery : usersQuery;
 
-    return {
-        search,
-        setSearch,
-        users,
-        isLoading: query.isLoading,
-        fetchNextPage: query.fetchNextPage,
-        hasNextPage: query.hasNextPage,
-    }
+  const users = query.data?.pages.flat() ?? [];
+
+  return {
+    search,
+    setSearch,
+    users,
+    isLoading: query.isLoading,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: query.hasNextPage,
+  };
 }

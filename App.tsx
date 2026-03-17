@@ -1,7 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
-import AppNavigator from "./src/navigation/AppNavigator";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./src/services/queryClient";
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import AppNavigator from './src/navigation/AppNavigator';
+import { queryClient } from './src/services/queryClient';
 
 export default function App() {
   return (
@@ -10,5 +11,5 @@ export default function App() {
         <AppNavigator />
       </NavigationContainer>
     </QueryClientProvider>
-  ) ;
+  );
 }

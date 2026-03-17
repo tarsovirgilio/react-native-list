@@ -1,13 +1,20 @@
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet } from 'react-native';
 
 type EmptyStateProps = {
-    message: string;
-}
+  message: string;
+};
 
 export default function EmptyState({ message }: EmptyStateProps) {
   return (
-    <View style={{ alignItems: "center", marginTop: 40 }}>
+    <View style={style.row}>
       <Text>{message}</Text>
     </View>
-  )
+  );
 }
+
+const style = StyleSheet.create({
+  row: {
+    alignItems: 'center',
+    marginTop: 40,
+  },
+});

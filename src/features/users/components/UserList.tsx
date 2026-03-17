@@ -1,17 +1,18 @@
-import { ComponentType, useCallback } from "react"
-import UserListItem from "./UserListItem"
-import { User } from "../types/User";
-import { ListRenderItem, ListRenderItemInfo } from "react-native";
-import PaginatedList from "../../../shared/components/PaginatedList";
+import React, { useCallback } from 'react';
+import { ListRenderItem } from 'react-native';
+
+import UserListItem from './UserListItem';
+import { User } from '../types/User';
+import PaginatedList from '../../../shared/components/PaginatedList';
 
 type UserListProps = {
-    users: User[];
-    favorites?: number[];
-    onToggleFavorite?: (user: User) => void;
-    onEndReached?: () => void;
-    isFetchingNextPage?: boolean;
-    ListEmptyComponent: React.JSX.Element;
-}
+  users: User[];
+  favorites?: number[];
+  onToggleFavorite?: () => void;
+  onEndReached?: () => void;
+  isFetchingNextPage?: boolean;
+  ListEmptyComponent: React.JSX.Element;
+};
 
 export default function UserList({
   users,
@@ -19,10 +20,9 @@ export default function UserList({
   onToggleFavorite,
   onEndReached,
   isFetchingNextPage,
-  ListEmptyComponent
+  ListEmptyComponent,
 }: UserListProps) {
-
-  const renderItem: ListRenderItem<User>= useCallback(
+  const renderItem: ListRenderItem<User> = useCallback(
     ({ item }) => (
       <UserListItem
         user={item}
@@ -30,17 +30,17 @@ export default function UserList({
         onToggleFavorite={onToggleFavorite}
       />
     ),
-    [favorites, onToggleFavorite]
-  )
+    [favorites, onToggleFavorite],
+  );
 
   return (
     <PaginatedList<User>
-        data={users}
-        keyExtractor={(item) => `${item.node_id}_${item.id}_${item.login}`}
-        renderItem={renderItem}
-        onEndReached={onEndReached}
-        isFetchingNextPage={isFetchingNextPage}
-        ListEmptyComponent={ListEmptyComponent}
+      data={users}
+      keyExtractor={(item) => `${item.node_id}_${item.id}_${item.login}`}
+      renderItem={renderItem}
+      onEndReached={onEndReached}
+      isFetchingNextPage={isFetchingNextPage}
+      ListEmptyComponent={ListEmptyComponent}
     />
-  )
+  );
 }

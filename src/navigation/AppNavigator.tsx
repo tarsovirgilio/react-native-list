@@ -1,7 +1,8 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../app/home/HomeScreen";
-import FavoritesScreen from "../app/favorites/FavoritesScreen";
-import ProfileScreen from "../app/profile/ProfileScreen";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import HomeScreen from '../app/home/HomeScreen';
+import FavoritesScreen from '../app/favorites/FavoritesScreen';
+import ProfileScreen from '../app/profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 

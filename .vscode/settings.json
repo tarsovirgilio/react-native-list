@@ -8,6 +8,7 @@
   "editor.lineNumbers": "on",
   "files.eol": "\n",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.experimental.useFlatConfig": true,
   "editor.formatOnSave": true,
   "workbench.editor.labelFormat": "short",
   "editor.tabSize": 2,
