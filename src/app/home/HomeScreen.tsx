@@ -7,10 +7,12 @@ import { useUsersController } from '../../features/users/hooks/useUsersControlle
 import UserList from '../../features/users/components/UserList';
 import EmptyState from '../../shared/components/EmptyState';
 import UserListSkeleton from '@/features/users/components/UserListSkeleton';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 export default function HomeScreen() {
   const { search, setSearch, users, isLoading, fetchNextPage, hasNextPage, isError } =
     useUsersController();
+  const isConnected = useNetworkStatus();
 
   const favorites = useFavoritesStore((state) => state.favorites);
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
@@ -34,6 +36,7 @@ export default function HomeScreen() {
 
   return (
     <View>
+      {!isConnected && <Text style={{ color: 'red' }}>Você está offline</Text>}
       <SearchInput value={search} onChange={setSearch} />
       {uniqueUsers.length === 0 && isLoading ? (
         <UserListSkeleton />
@@ -43,7 +46,7 @@ export default function HomeScreen() {
           favorites={favorites.map((f) => f.id)}
           onToggleFavorite={toggleFavorite}
           onEndReached={() => {
-            if (hasNextPage) fetchNextPage();
+            if (hasNextPage && isConnected) fetchNextPage();
           }}
           ListEmptyComponent={<EmptyState message="User not found" />}
         />
